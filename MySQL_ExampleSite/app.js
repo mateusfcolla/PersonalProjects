@@ -1,0 +1,96 @@
+const express = require('express');
+
+const app = express();
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
+
+                                /* How to use MySQL with NodeJS BASICS */
+/* ---------------------------------------------------------------------------------------------------------------------------------*/
+const mysql = require('mysql'); // STEP 1 - install and require MySQL
+
+// STEP 2 - create a connection:
+const db = mysql.createConnection({
+    host    : 'localhost',
+    user    : 'root',
+    // password: '',        | if exists, you have to put your password
+    database: 'mydatabase' // Just use this after you created your database in PHPMyAdmin or whatever
+});
+
+// STEP 3 - connect to the database
+db.connect((err) =>{
+    // You'll find the following command all through the connections, what it does is:
+    // It verifies if there is and error and if there is, 'console.log' it.
+    if(err) throw err; 
+    console.log('MySQL Connected!');
+});
+
+// STEP 4 - use 'app.get' to execute a command
+app.get('/createtable', (req, res) =>{
+    // STEP 4.1 - put the command you want to execute inside a variable
+    let sql = 'CREATE TABLE posts(id_post int primary key auto_increment, title varchar(200),'+
+    'content varchar(1000), author varchar(50), img varchar(500));';
+    // STEP 4.2 - use the following command to execute the command
+    db.query(sql, (err, result) => {
+       if(err) throw err;
+       console.log(result);
+       res.send('Posts table created!'); 
+    });
+});
+
+// STEP 5 - insert data into the DB
+app.get('/addpost', (req, res) =>{
+    // STEP 5.1 - put the data into a variable
+    let post = {title: 'Post 1', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam laoreet tortor sed tincidunt rhoncus. Vestibulum semper vel augue eget gravida. Sed ut rhoncus enim, finibus facilisis urna. Aliquam non varius felis. Curabitur fermentum pretium mattis. Fusce cursus ante ac ligula bibendum, a luctus dolor sodales. Cras vel interdum felis. Etiam interdum mi hendrerit enim tempor, nec consequat risus consequat. Pellentesque neque ante, pharetra id faucibus nec, elementum cursus erat. Aenean ut dolor ut metus placerat feugiat a ullamcorper metus. Morbi scelerisque bibendum lacus at iaculis. Vivamus in enim eu ante pharetra rutrum sed vel enim. Duis enim quam, tincidunt eleifend diam lacinia, hendrerit porta magna. ' ,
+    author: 'Jeff', img: 'https://i.kym-cdn.com/entries/icons/original/000/016/894/mynameehhjeff.jpg'};
+    // STEP 5.2 - put the command into a variable with 'SET ?' in the end
+    let sql = 'INSERT INTO posts SET ?';
+    // STEP 5.3 - execute the command
+    let query = db.query(sql, person, (err, results) =>{
+        if(err) throw err;
+        console.log(results);
+        res.send('Post added!');
+    });
+});
+
+// STEP 6 - use data from your DB
+app.get('/showTable', (req, res)=>{
+    // STEP 6.1 - put the command insite a variable
+    let sql = 'SELECT * FROM posts';
+    // STEP 6.2 - Execute it
+    let query = db.query(sql, (err, results)=>{
+        if(err) throw err;
+        console.log(results);
+        res.send(results);
+    });
+});
+
+                                /* Bonus step */
+/* ---------------------------------------------------------------------------------------------------------------------------------*/
+
+// EXAMPLE STEP - create a database through an app.get
+app.get('/createdatabase', (req, res) =>{
+    let sql = 'CREATE DATABASE mydatabase';
+    db.query(sql, (err, result) =>{
+        if(err) throw err;
+        console.log(result);
+        res.send('Database Created!');
+    });
+});
+
+/* ---------------------------------------------------------------------------------------------------------------------------------*/
+
+                                /* SITE EXAMPLE */ 
+
+app.get('/', (req, res) =>{
+    res.render('home');
+});
+
+app.get('/newPost', (req, res) =>{
+    res.render('newPost');
+});
+
+
+app.listen(1808, () =>{
+    console.log('Server online!');
+});
