@@ -6,3 +6,7 @@ body{
 #firstComponent{
     margin-top: 56px;
 }
+
+#Post{
+    color: rgb(24, 24, 24)!important;
+}

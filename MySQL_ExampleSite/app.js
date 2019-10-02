@@ -1,9 +1,12 @@
 const express = require('express');
+var bodyParser = require('body-parser');
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended: true}));
+
 
                                 /* How to use MySQL with NodeJS BASICS */
 /* ---------------------------------------------------------------------------------------------------------------------------------*/
@@ -46,7 +49,7 @@ app.get('/addpost', (req, res) =>{
     // STEP 5.2 - put the command into a variable with 'SET ?' in the end
     let sql = 'INSERT INTO posts SET ?';
     // STEP 5.3 - execute the command
-    let query = db.query(sql, person, (err, results) =>{
+    let query = db.query(sql, post, (err, results) =>{
         if(err) throw err;
         console.log(results);
         res.send('Post added!');
@@ -82,12 +85,38 @@ app.get('/createdatabase', (req, res) =>{
 
                                 /* SITE EXAMPLE */ 
 
+var position;
+
 app.get('/', (req, res) =>{
-    res.render('home');
+    let sql = 'SELECT * FROM posts';
+    let query = db.query(sql, (err, results)=>{
+        if(err) throw err;
+        res.render('home', {data:results});
+    });
+
 });
 
 app.get('/newPost', (req, res) =>{
     res.render('newPost');
+});
+
+app.post('/addPost', (req, res) =>{
+    let newPost = {title: req.body.inputTitle1, content: req.body.inputContent1, author: req.body.inputAuthor1};
+    let sql = 'INSERT INTO posts SET ?';
+    let query = db.query(sql, newPost, (err, results) =>{
+        if(err) throw err;
+        console.log(results);
+        res.redirect('/newPost');
+    });
+});
+app.post('/deletePost/:id', (req, res) =>{
+    let Post = {id_post: req.params.id};
+    let sql = 'DELETE FROM posts WHERE id_post= ?';
+    let query = db.query(sql, Post, (err, results) =>{
+        if(err) throw err;
+        console.log(results);
+        res.redirect('/');
+    });
 });
 
 

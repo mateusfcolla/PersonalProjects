@@ -4,6 +4,23 @@
 
 <div class="container" id="firstComponent">
     <div class="text-center py-4"> <h1>Welcome to the MySQL Example Site!</h1> </div>
+    <div id="Post" class="row d-flex justify-content-center">
+        <% for(var i = 0; i < data.length; i++){ %>
+            <div class="card w-75">
+                <div class="card-body">
+                  <h5 class="card-title"><%= data[i]['title'] %></h5>
+                  <p class="card-text"><%= data[i]['content'] %></p>
+                </div>
+                <div class="card-footer">
+                    <div class="row d-flex justify-content-around">
+                            <small> <span class='text-muted'>Author: </span><%= data[i]['author'] %> </small>
+                            <a href="/editPost" class="btn btn-warning">Edit</a>
+                            <form action="/deletePost/"+<%=i%> method="POST"</form><input type="text" value=<%= i %> class="d-none" name="inputId"><button class="btn btn-danger" type='submit'>Delete</button> </form>
+                    </div>
+                </div>
+              </div>
+        <%}%>
+    </div>
 </div>
 
 
