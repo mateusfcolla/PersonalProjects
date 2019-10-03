@@ -134,6 +134,28 @@ app.post('/editTitle/:id/', (req, res) => {
     });
 });
 
+
+app.post('/editContent/:id/', (req, res) => {
+    let id = req.params.id;
+    let updated = req.body.editContent;
+    let sql = `UPDATE posts SET content = '${updated}' WHERE id_post = ${id}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err) throw err;
+        res.redirect('/editPost/'+id);
+    });
+});
+
+
+app.post('/editAuthor/:id/', (req, res) => {
+    let id = req.params.id;
+    let updated = req.body.editAuthor;
+    let sql = `UPDATE posts SET author = '${updated}' WHERE id_post = ${id}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err) throw err;
+        res.redirect('/editPost/'+id);
+    });
+});
+
 app.get('/:id', (req, res) =>{
     let sql = `DELETE FROM posts WHERE id_post= ${req.params.id}`;
     let query = db.query(sql, (err, results) =>{

@@ -10,6 +10,14 @@
             <% let pathTitle = '/editTitle/'+data[0]['id_post']+'/' %>
             <% let title = data[0]['title']%>
             <form action=<%= pathTitle %> method='POST'> <input type="text" name="editTitle" id="editTitle" class="form-control" placeholder=<%= title %>></form>
+            <% let pathContent = '/editContent/'+data[0]['id_post']+'/' %>
+            <% let content = data[0]['content'] %>
+            <label for="editTitle">Content:</label>
+            <form action=<%= pathContent %> method='POST'> <input type="text" name="editContent" id="editContent" class="form-control" placeholder=<%= content %>></form>
+            <% let pathAuthor = '/editAuthor/'+data[0]['id_post']+'/' %>
+            <% let author = data[0]['author'] %>
+            <label for="editTitle">Author:</label>
+            <form action=<%= pathAuthor %> method='POST'> <input type="text" name="editAuthor" id="editAuthor" class="form-control" placeholder=<%= author %>></form>
         </div>
     
 
