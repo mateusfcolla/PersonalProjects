@@ -5,6 +5,14 @@
 <div class="container" id="firstComponent">
     <div class="text-center py-4"> <h1>Edit post</h1> </div>
     
+        <div class="form-group">
+            <label for="editTitle">Title:</label>
+            <% let pathTitle = '/editTitle/'+data[0]['id_post']+'/' %>
+            <% let title = data[0]['title']%>
+            <form action=<%= pathTitle %> method='POST'> <input type="text" name="editTitle" id="editTitle" class="form-control" placeholder=<%= title %>></form>
+        </div>
+    
+
 </div>
 
 

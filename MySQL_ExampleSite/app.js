@@ -7,6 +7,10 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
 
+const favicon = require('serve-favicon');
+const path = require('path');
+app.use(favicon(path.join(__dirname, 'public', 'images', 'favicon.ico') ) );
+
 
                                 /* How to use MySQL with NodeJS BASICS */
 /* ---------------------------------------------------------------------------------------------------------------------------------*/
@@ -109,10 +113,30 @@ app.post('/addPost', (req, res) =>{
         res.redirect('/newPost');
     });
 });
-app.post('/deletePost/:id', (req, res) =>{
-    let Post = {id_post: req.params.id};
-    let sql = 'DELETE FROM posts WHERE id_post= ?';
-    let query = db.query(sql, Post, (err, results) =>{
+
+app.get('/editPost/:id', (req, res) => {
+    let id = req.params.id;
+    let sql = `SELECT * FROM posts WHERE id_post= ${id}`;
+    let query = db.query(sql, (err, results)=>{
+        if(err) throw err;
+        console.log(results);
+        res.render('editPost', {data:results, id:id});
+    });
+})
+
+app.post('/editTitle/:id/', (req, res) => {
+    let id = req.params.id;
+    let updated = req.body.editTitle;
+    let sql = `UPDATE posts SET title = '${updated}' WHERE id_post = ${id}`;
+    let query = db.query(sql, (err, results) =>{
+        if(err) throw err;
+        res.redirect('/editPost/'+id);
+    });
+});
+
+app.get('/:id', (req, res) =>{
+    let sql = `DELETE FROM posts WHERE id_post= ${req.params.id}`;
+    let query = db.query(sql, (err, results) =>{
         if(err) throw err;
         console.log(results);
         res.redirect('/');

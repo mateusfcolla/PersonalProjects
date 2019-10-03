@@ -14,8 +14,9 @@
                 <div class="card-footer">
                     <div class="row d-flex justify-content-around">
                             <small> <span class='text-muted'>Author: </span><%= data[i]['author'] %> </small>
-                            <a href="/editPost" class="btn btn-warning">Edit</a>
-                            <form action="/deletePost/"+<%=i%> method="POST"</form><input type="text" value=<%= i %> class="d-none" name="inputId"><button class="btn btn-danger" type='submit'>Delete</button> </form>
+                            <% let text = '/editPost/'+data[i]['id_post'] %>
+                            <a href=<%= text %> class="btn btn-warning">Edit</a>
+                            <a href=<%=data[i]['id_post']%> class="btn btn-danger">Delete</a>
                     </div>
                 </div>
               </div>
