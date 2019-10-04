@@ -11,7 +11,7 @@
             <input type="text" name="editTitle" id="editTitle" class="form-control" value="<%= data[0]['title'] %>">
 
             <label for="editTitle">Content:</label>
-            <input type="text" name="editContent" id="editContent" class="form-control" value="<%=data[0]['content']%>">
+            <textarea type="textarea" name="editContent" id="editContent" class="form-control" rows="4"><%=data[0]['content']%></textarea>
             
             <label for="editTitle">Author:</label>
             <input type="text" name="editAuthor" id="editAuthor" class="form-control" value="<%=data[0]['author']%>">

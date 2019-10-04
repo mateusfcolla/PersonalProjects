@@ -3,7 +3,11 @@ body{
     color: white!important;
 }
 
-.txt_yellow{
+.card{
+    margin-top: 30px!important;
+}
+
+#navBarColor{
     color: yellow!important;
 }
 
