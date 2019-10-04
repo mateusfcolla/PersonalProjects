@@ -114,49 +114,57 @@ app.post('/addPost', (req, res) =>{
     });
 });
 
-app.get('/editPost/:id', (req, res) => {
+app.get('/editPage/:id', (req, res) => {
     let id = req.params.id;
-    let sql = `SELECT * FROM posts WHERE id_post= ${id}`;
-    let query = db.query(sql, (err, results)=>{
+    // Select: 
+    let sqlSelect = `SELECT * FROM posts WHERE id_post= ${id}`;
+    let resSelect;
+    let query = db.query(sqlSelect, (err, results)=>{
         if(err) throw err;
+        resSelect = results;
         console.log(results);
-        res.render('editPost', {data:results, id:id});
+          
+        res.render('editPost', {data:resSelect, id:id});
+  
     });
+
 })
 
-app.post('/editTitle/:id/', (req, res) => {
-    let id = req.params.id;
-    let updated = req.body.editTitle;
-    let sql = `UPDATE posts SET title = '${updated}' WHERE id_post = ${id}`;
-    let query = db.query(sql, (err, results) =>{
+app.post('/EditPost/:id', (req, res) =>{
+    id = req.params.id;
+    //Edit Title: 
+    let newTitle = req.body.editTitle;
+    let sqlEditTitle = `UPDATE posts SET title = '${newTitle}'WHERE id_post= ${id}`;
+    let resEditTitle;
+    let queryEditTitle = db.query(sqlEditTitle, (err, results)=>{
         if(err) throw err;
-        res.redirect('/editPost/'+id);
+        resEditTitle = results;
+        console.log(results);
+    });
+
+    //Edit Content: 
+    let newContent = req.body.editContent;
+    let sqlEditContent = `UPDATE posts SET content = '${newContent}'WHERE id_post= ${id}`;
+    let resEditContent;
+    let queryEditContent = db.query(sqlEditContent, (err, results)=>{
+        if(err) throw err;
+        resEditContent = results;
+        console.log(results);
+    });
+
+    //Edit Author: 
+    let newAuthor = req.body.editAuthor;
+    let sqlEditAuthor = `UPDATE posts SET author = '${newAuthor}'WHERE id_post= ${id}`;
+    let resEditAuthor;
+    let queryEditAuthor = db.query(sqlEditAuthor, (err, results)=>{
+        if(err) throw err;
+        resEditAuthor = results;
+        console.log(results);
+        res.redirect(`/EditPage/${id}`);
     });
 });
 
-
-app.post('/editContent/:id/', (req, res) => {
-    let id = req.params.id;
-    let updated = req.body.editContent;
-    let sql = `UPDATE posts SET content = '${updated}' WHERE id_post = ${id}`;
-    let query = db.query(sql, (err, results) =>{
-        if(err) throw err;
-        res.redirect('/editPost/'+id);
-    });
-});
-
-
-app.post('/editAuthor/:id/', (req, res) => {
-    let id = req.params.id;
-    let updated = req.body.editAuthor;
-    let sql = `UPDATE posts SET author = '${updated}' WHERE id_post = ${id}`;
-    let query = db.query(sql, (err, results) =>{
-        if(err) throw err;
-        res.redirect('/editPost/'+id);
-    });
-});
-
-app.get('/:id', (req, res) =>{
+app.get('/deletePost/:id', (req, res) =>{
     let sql = `DELETE FROM posts WHERE id_post= ${req.params.id}`;
     let query = db.query(sql, (err, results) =>{
         if(err) throw err;

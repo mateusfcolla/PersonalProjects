@@ -2,7 +2,13 @@
 
 <% include partials/navbar %>
 
+<% include partials/indexJumbotron %>
+
 <div class="container" id="firstComponent">
+        <% include partials/mainCarousel %>
+</div>
+
+<div class="container">
     <div class="text-center py-4"> <h1>Welcome to the MySQL Example Site!</h1> </div>
     <div id="Post" class="row d-flex justify-content-center">
         <% for(var i = 0; i < data.length; i++){ %>
@@ -14,9 +20,8 @@
                 <div class="card-footer">
                     <div class="row d-flex justify-content-around">
                             <small> <span class='text-muted'>Author: </span><%= data[i]['author'] %> </small>
-                            <% let text = '/editPost/'+data[i]['id_post'] %>
-                            <a href=<%= text %> class="btn btn-warning">Edit</a>
-                            <a href=<%=data[i]['id_post']%> class="btn btn-danger">Delete</a>
+                            <a href="/editPage/<%=data[i]['id_post']%>" class="btn btn-warning">Edit</a>
+                            <a href="/deletePost/<%=data[i]['id_post']%>" class="btn btn-danger">Delete</a>
                     </div>
                 </div>
               </div>

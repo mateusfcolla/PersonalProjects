@@ -3,6 +3,10 @@ body{
     color: white!important;
 }
 
+.txt_yellow{
+    color: yellow!important;
+}
+
 #firstComponent{
     margin-top: 56px;
 }
