@@ -12,16 +12,16 @@
                   <h5 class="card-title"><%= data[i]['title'] %></h5>
                   <p class="card-text"><%= data[i]['content'] %></p>
                 </div>
-                <div class="card-footer">
-                    <div class="row d-flex justify-content-around">
-                            <small> <span class='text-muted'>Author: </span><%= data[i]['author'] %> </small>
-                            <a href="/editPage/<%=data[i]['id_post']%>" class="btn btn-warning">Edit</a>
-                            <a href="/deletePost/<%=data[i]['id_post']%>" class="btn btn-danger">Delete</a>
+                <div class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-around"><a href="/editPage/<%=data[i]['id_post']%>" class="btn btn-warning mr-3">Edit</a>
+                            <a href="/deletePost/<%=data[i]['id_post']%>" class="btn btn-danger">Delete</a></li>
                     </div>
+                <div class="card-footer">
+                            <small> <span class='text-muted'>Author: </span><%= data[i]['author'] %> </small>
                 </div>
-              </div>
+            </div>
         <%}%>
-    </div>
+    </div>    
 </div>
 
 
