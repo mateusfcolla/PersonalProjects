@@ -15,6 +15,11 @@
             
             <label for="editTitle">Author:</label>
             <input type="text" name="editAuthor" id="editAuthor" class="form-control" value="<%=data[0]['author']%>">
+
+            <div class="form-group">
+                    <label for="editFile">Image:</label>
+                    <input type="file" class="form-control-file" name="editFile" id="editFile" value="<%=data[0]['img']%>">
+            </div>
         </div>
     <button type="submit" class="btn btn-success">Submit</button>
     </form>

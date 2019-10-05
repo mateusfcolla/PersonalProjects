@@ -8,7 +8,9 @@
     <div id="Post" class="row d-flex justify-content-center">
         <% for(var i = 0; i < data.length; i++){ %>
             <div class="card w-75">
+
                 <div class="card-body">
+                    <img src="<%=data[i]['image']%>" class="card-img-top">
                   <h5 class="card-title"><%= data[i]['title'] %></h5>
                   <p class="card-text"><%= data[i]['content'] %></p>
                 </div>

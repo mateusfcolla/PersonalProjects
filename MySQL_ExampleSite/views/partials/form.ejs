@@ -1,4 +1,4 @@
-<form action="/addPost" method="POST">
+<form action="/addPost" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="inputTitle1">Title:</label>
         <input type="text" class="form-control" placeholder="Enter title" id="inputTitle1" name="inputTitle1">
@@ -10,6 +10,10 @@
     <div class="form-group">
         <label for="inputAuthor1">Author:</label>
         <input type="text" class="form-control" placeholder="Enter author" id="inputAuthor1" name="inputAuthor1">
+    </div>
+    <div class="form-group">
+            <label for="inputFile1">Image:</label>
+            <input type="file" class="form-control-file" name="inputFile1" id="inputFile1">
     </div>
     <button type="submit" class="btn btn-success">Submit</button>
 </form>
