@@ -5,7 +5,7 @@
 <div class="container" id="firstComponent">
     <div class="text-center py-4"> <h1>Edit post</h1> </div>
 
-    <form action="/editPost/<%= data[0]['id_post'] %>" method='POST'> 
+    <form action="/editPost/<%= data[0]['id_post'] %>" method='POST' enctype="multipart/form-data"> 
         <div class="form-group">
             <label for="editTitle">Title:</label>
             <input type="text" name="editTitle" id="editTitle" class="form-control" value="<%= data[0]['title'] %>">
@@ -17,8 +17,8 @@
             <input type="text" name="editAuthor" id="editAuthor" class="form-control" value="<%=data[0]['author']%>">
 
             <div class="form-group">
-                    <label for="editFile">Image:</label>
-                    <input type="file" class="form-control-file" name="editFile" id="editFile" value="<%=data[0]['img']%>">
+                <label for="editFile">Image:</label>
+                <input type="file" class="form-control-file" name="editFile" id="editFile">
             </div>
         </div>
     <button type="submit" class="btn btn-success">Submit</button>

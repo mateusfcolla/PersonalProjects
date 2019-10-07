@@ -113,7 +113,7 @@ app.post('/addPost', (req, res) =>{
         if(err) throw err;
         console.log('Image successfully uploaded!');
     };
-    let pathImg = ('public/images/'+imageUploaded.name);
+    let pathImg = ('images/'+imageUploaded.name);
     let newPost = {title: req.body.inputTitle1, content: req.body.inputContent1, author: req.body.inputAuthor1, img: pathImg};
     let sql = 'INSERT INTO posts SET ?';
     let query = db.query(sql, newPost, (err, results) =>{
@@ -169,18 +169,15 @@ app.post('/EditPost/:id', (req, res) =>{
         resSelectImage = result;
         console.log(resSelectImage);
     });
-    // fs.unlink(`public/images/${resSelectImage[0]['img']}`, (err) => {
-    //     if(err) throw err;
-    // });
     //Edit Image:
     let newImage = req.files.editFile;
-    let newPathImage = ('public/images/'+newImage.name);
-    imageUploaded.mv('public/images/' + imageUploaded.name), (err) => {
+    let newPathImage = ('images/'+newImage.name);
+    newImage.mv('public/images/'+newImage.name), (err) => {
         if(err) throw err;
         console.log('Image successfully uploaded!');
     };
 
-    let sqlEditImage = `UPDATE posts SET image = '${newPathImage}'WHERE id_post= ${id}`;
+    let sqlEditImage = `UPDATE posts SET img = '${newPathImage}'WHERE id_post= ${id}`;
     let queryEditImage = db.query(sqlEditImage, (err, results)=>{
         if(err) throw err;
         console.log(results);
@@ -193,7 +190,7 @@ app.post('/EditPost/:id', (req, res) =>{
         if(err) throw err;
         resEditAuthor = results;
         console.log(results);
-        res.redirect(`/EditPage/${id}`);
+        res.redirect(`/`);
     });
 });
 
