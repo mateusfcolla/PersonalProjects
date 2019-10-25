@@ -8,7 +8,7 @@ app.set('view engine', 'ejs');
 var campgrounds = [
     {name: 'Shrek Swamp', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQmSIoAfC-k-4hAO92syQnW16Ko9ACp-SELUaBUEOozBWSFouVM'},
     {name: 'Shrek Swamp 2', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRRPifrzwfTZQrccsv3RTeCvOWVW3pjzgqomFIQbTopPKse-fpu'},
-    {name: 'Shrek Swamp 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQu-2g7NAt2rxVKj01hxUtnzZmY9AQjq0mxe5zH8JuhnbcXp7Vx'}
+    {name: 'Shrek Swamp 3', image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQu-2g7NAt2rxVKj01hxUtnzZmY9AQjq0mxe5zH8JuhnbcXp7Vx'},
 ]
 
 app.get('/', (req, res) =>{
