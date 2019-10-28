@@ -9,7 +9,8 @@ app.set('view engine', 'ejs');
 
 const campgroundSchema = new mongoose.Schema({
     name: String,
-    image: String
+    image: String,
+    description: String
 });
 
 const Campground = mongoose.model("Campground", campgroundSchema);
@@ -21,14 +22,15 @@ app.get('/', (req, res) =>{
 app.get('/campgrounds', (req, res)=>{
     Campground.find({}, (err, campgrounds)=>{
         if (err) throw err;
-        res.render('campgrounds', {campgrounds:campgrounds});
+        res.render('index', {campgrounds:campgrounds});
     })
 });
 
 app.post('/campgrounds', (req, res) =>{
     Campground.create({
         name: req.body.name,
-        image: req.body.image
+        image: req.body.image,
+        description: req.body.description
     }, (err)=> { if (err) throw err});
     res.redirect('/campgrounds');
 });
@@ -36,6 +38,13 @@ app.post('/campgrounds', (req, res) =>{
 app.get('/campgrounds/new', (req, res) =>{
     res.render('new');
 });
+
+app.get("/campgrounds/:id", (req, res)=>{
+    Campground.findById(req.params.id, (err, found)=>{
+        if(err)throw err;
+        res.render('show', {campground:found});    
+    });
+})
 
 app.listen(3000, ()=>{
     console.log('YelpCamp Server has Started!');
