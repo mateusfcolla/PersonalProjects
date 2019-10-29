@@ -44,7 +44,18 @@ app.get("/campgrounds/:id", (req, res)=>{
         if(err)throw err;
         res.render('show', {campground:found});    
     });
-})
+});
+
+app.get("/campgrounds/:id/edit", (req, res)=>{
+    Campground.findById(req.params.id, (err, found)=>{
+        if(err)throw err;
+        res.render('edit', {campground:found});    
+    });
+});
+
+app.put("/campgrounds/:id", (req,res)=>{
+    
+});
 
 app.listen(3000, ()=>{
     console.log('YelpCamp Server has Started!');
