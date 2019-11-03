@@ -1,12 +1,17 @@
-const express       = require('express'),
-     bodyParser     = require('body-parser'),
-     mongoose       = require('mongoose'),
-     campground     = require('./models/campground'),
-     app            = express();
+const express           = require('express'),
+     bodyParser         = require('body-parser'),
+     mongoose           = require('mongoose'),
+     expressSanitizer   = require('express-sanitizer'),
+     methodOverride     = require('method-override'),
+     Campground         = require('./models/campground'),
+     app                = express();
 
-mongoose.connect('mongodb://localhost/yelp_camp', { useNewUrlParser: true, useUnifiedTopology: true})
-app.use(bodyParser.urlencoded({extended: true}));
+mongoose.connect('mongodb://localhost:27017/yelp_camp', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
+app.use(express.static('public'));
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
+app.use(expressSanitizer());
 
 app.get('/', (req, res) =>{
     res.render('landing');
