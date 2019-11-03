@@ -1,6 +1,6 @@
 // Mongoose connect:
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/restful_blog_app', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
+mongoose.connect('mongodb://localhost:27017/blogdemo', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
 // Post - Title, Content:
 const postSchema = new mongoose.Schema({
     title: String,
@@ -14,17 +14,30 @@ const userSchema = new mongoose.Schema({
     posts: [postSchema]
 });
 const User = mongoose.model('User', userSchema);
+
+
 // Insert: 
 
 // var newUser = new User({
-//     email: 'manamjef@jeef.nam',
-//     name: 'Jeff'
+//     email: 'masterxeff@jeef.nam',
+//     name: 'Xeff'
+// });
+// newUser.posts.push({
+//     title: 'XON XEF',
+//     content: 'XIN XON XUN post malone'
 // })
 // newUser.save((err, user)=>{
 //     if(err)throw err;
 //     console.log(user);
 // });
-
+User.findOne({name: 'Xeff'}, (err, user)=>{
+    if(err) throw err;
+    user.posts.push({
+        title: 'Xoin Xin',
+        content: '-asian'
+    });
+    console.log(user);
+});
 // var newPost = new Post({
 //     title: 'Me jamo jef',
 //     content: 'So many jef yep'
