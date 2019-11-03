@@ -16,6 +16,7 @@ const blogSchema = new mongoose.Schema({
     body: String,
     created: {type: Date, default: Date.now},
 });
+
 const Blog = mongoose.model('Blog', blogSchema);
 
 // RESTFUL ROUTES
@@ -29,6 +30,20 @@ app.get('/blogs', (req, res)=>{
         if(err) throw err;
         res.render('index', {blogs, blogs})
     });
+});
+
+app.get('/blogs/new', (req, res)=>{
+    res.render('new');
+});
+
+app.post('/blogs', (req, res)=>{
+    // Create blog:
+    Blog.create(req.body.blog, (err, blog)=>{
+        if(err) throw err;
+        console.log(`Created blog!`);
+        res.redirect('/');
+    });
+    
 });
 
 app.listen(3000, ()=>{
