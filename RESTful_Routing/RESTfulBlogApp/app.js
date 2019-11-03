@@ -1,12 +1,14 @@
-const express       = require('express'),
-      bodyParser    = require('body-parser'),
-      mongoose      = require('mongoose'),
-      app           = express();
+const express        = require('express'),
+      bodyParser     = require('body-parser'),
+      mongoose       = require('mongoose'),
+      methodOverride = require('method-override'),
+      app            = express();
 
 mongoose.connect('mongodb://localhost:27017/restful_blog_app', { useNewUrlParser: true, useUnifiedTopology: true});
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(methodOverride('_method'));
 
 // MONGOOSE/MODEL CONFIG
 
@@ -51,6 +53,27 @@ app.get('/blogs/:id', (req, res)=>{
         res.render('show', {blog:foundBlog});
         });
 });
+
+app.get('/blogs/:id/edit', (req, res)=>{
+    Blog.findById(req.params.id, (err, foundBlog)=>{
+        if(err) throw err;
+        res.render('edit', {blog:foundBlog});
+    });
+});
+
+app.put('/blogs/:id', (req, res)=>{
+    Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog)=>{
+        if(err) throw err;
+        res.redirect('/');
+    })
+});
+
+app.delete('/blogs/:id', (req, res)=>{
+    Blog.findByIdAndRemove(req.params.id, (err)=>{
+        if(err) throw err;
+        res.redirect('/blogs');
+    });
+})
 
 app.get('*', (req, res)=>{
     res.redirect('/blogs');
