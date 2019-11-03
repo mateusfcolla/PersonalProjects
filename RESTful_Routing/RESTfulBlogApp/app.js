@@ -42,8 +42,18 @@ app.post('/blogs', (req, res)=>{
         if(err) throw err;
         console.log(`Created blog!`);
         res.redirect('/');
-    });
-    
+    }); 
+});
+
+app.get('/blogs/:id', (req, res)=>{
+    Blog.findById(req.params.id, (err, foundBlog)=>{
+        if(err){res.redirect('/blogs')}
+        res.render('show', {blog:foundBlog});
+        });
+});
+
+app.get('*', (req, res)=>{
+    res.redirect('/blogs');
 });
 
 app.listen(3000, ()=>{
