@@ -1,20 +1,9 @@
 // Mongoose connect:
-const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/blogdemo', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
-// Post - Title, Content:
-const postSchema = new mongoose.Schema({
-    title: String,
-    content: String
-});
-const Post = mongoose.model('Post', postSchema);
-// User - Email, Name:
-const userSchema = new mongoose.Schema({
-    email: String,
-    name: String,
-    posts: [postSchema]
-});
-const User = mongoose.model('User', userSchema);
+const mongoose = require('mongoose'),
+      Post     = require('./models/post'),
+      User     = require('./models/user');
 
+mongoose.connect('mongodb://localhost:27017/blogdemo_2', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});
 
 // Insert: 
 
@@ -30,14 +19,14 @@ const User = mongoose.model('User', userSchema);
 //     if(err)throw err;
 //     console.log(user);
 // });
-User.findOne({name: 'Xeff'}, (err, user)=>{
-    if(err) throw err;
-    user.posts.push({
-        title: 'Xoin Xin',
-        content: '-asian'
-    });
-    console.log(user);
-});
+// User.findOne({name: 'Xeff'}, (err, user)=>{
+//     if(err) throw err;
+//     user.posts.push({
+//         title: 'Xoin Xin',
+//         content: '-asian'
+//     });
+//     console.log(user);
+// });
 // var newPost = new Post({
 //     title: 'Me jamo jef',
 //     content: 'So many jef yep'
