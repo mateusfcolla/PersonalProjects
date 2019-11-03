@@ -10,7 +10,7 @@
                 <h2><%=blog.title%></h2>
             </div>
             <div class="card-body">
-                <p><%=blog.body%></p>
+                <p><%-blog.body%></p>
                 <small><%=blog.created.toDateString()%></small> <br><br>
                 <a href="/blogs/<%=blog._id%>" class="btn btn-info">Read More</a>
             </div>
