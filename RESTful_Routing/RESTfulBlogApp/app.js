@@ -70,7 +70,7 @@ app.put('/blogs/:id', (req, res)=>{
     Blog.findByIdAndUpdate(req.params.id, req.body.blog, (err, updatedBlog)=>{
         if(err) throw err;
         res.redirect('/');
-    })
+    });
 });
 
 app.delete('/blogs/:id', (req, res)=>{
