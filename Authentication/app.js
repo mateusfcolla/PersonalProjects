@@ -19,8 +19,29 @@ app.use(passport.session());
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+// Index page route
 app.get('/', (req, res)=>{
     res.render('landing');
+});
+
+// Secret page route
+app.get('/secret', (req, res) =>{
+    res.render('secret');
+});
+
+// Show sign-up form route
+app.get('/register', (req, res)=>{
+    res.render('user/register');
+});
+
+// User sign-up
+app.post('/register', (req, res)=>{
+    User.register(new User({username: req.body.user.username}), req.body.user.password, (err, newUser)=>{
+        if(err){console.log(err); return res.render('user/register')};
+        passport.authenticate('local')(req, res, ()=>{
+            res.redirect('/secret');
+        });
+    })
 });
 
 app.listen(3000, ()=>{
