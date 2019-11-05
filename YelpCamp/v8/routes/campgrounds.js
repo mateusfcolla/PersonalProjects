@@ -9,7 +9,7 @@ router.get('/', (req, res)=>{
     })
 });
 
-router.post('/', (req, res) =>{
+router.post('/', isLoggedIn , (req, res) =>{
     Campground.create({
         name: req.body.name,
         image: req.body.image,
@@ -18,7 +18,7 @@ router.post('/', (req, res) =>{
     res.redirect('/campgrounds');
 });
 
-router.get('/new', (req, res) =>{
+router.get('/new', isLoggedIn , (req, res) =>{
     res.render('campgrounds/new');
 });
 
