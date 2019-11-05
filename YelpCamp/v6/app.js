@@ -18,6 +18,18 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(expressSanitizer());
+// Passport Configuration:
+app.use(require('express-session')({
+    secret: 'Shrek is love Shrek is life',
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// ROUTES: 
 
 app.get('/', (req, res) =>{
     res.render('landing');
@@ -70,6 +82,35 @@ app.post('/campgrounds/:id/comments', (req, res)=>{
             res.redirect(`/campgrounds/${foundCampground._id}`);
         });
     });
+});
+// Auth Routes
+// Show register form
+app.get('/register', (req, res)=>{
+    res.render('register');
+});
+// Register logic
+app.post('/register', (req, res)=>{
+    User.register(new User({username: req.body.username}), req.body.password, (err, newUser)=>{
+        if(err){console.log(err); return res.render('register')};
+        passport.authenticate('local')(req, res, ()=>{
+            res.redirect('/campgrounds');
+        });
+    });
+});
+// Login
+app.get('/login', (req, res)=>{
+    res.render('login');
+})
+// Login logic
+app.post('/login', passport.authenticate('local', {
+     successRedirect: '/campgrounds',
+     failureRedirect: '/login'
+    }) , (req, res)=>{
+});
+// Logout
+app.get('/logout', (req, res)=>{
+    req.logout();
+    res.redirect('/campgrounds');
 });
 
 app.listen(3000, ()=>{
