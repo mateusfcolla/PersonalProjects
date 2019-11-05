@@ -8,7 +8,7 @@ const express            = require('express'),
       seedDB             = require('./seeds'),
       app                = express();
 
-seedDB();
+// seedDB();
 mongoose.connect('mongodb://localhost:27017/yelp_camp', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -23,7 +23,7 @@ app.get('/', (req, res) =>{
 app.get('/campgrounds', (req, res)=>{
     Campground.find({}, (err, campgrounds)=>{
         if (err) throw err;
-        res.render('index', {campgrounds:campgrounds});
+        res.render('campgrounds/index', {campgrounds:campgrounds});
     })
 });
 
@@ -37,28 +37,35 @@ app.post('/campgrounds', (req, res) =>{
 });
 
 app.get('/campgrounds/new', (req, res) =>{
-    res.render('new');
+    res.render('campgrounds/new');
 });
 
-app.get("/campgrounds/:id", (req, res)=>{
+app.get('/campgrounds/:id', (req, res)=>{
     Campground.findById(req.params.id).populate('comments').exec((err, foundCampground)=>{
         if(err)throw err;
-        res.render('show', {campground:foundCampground});
+        res.render('campgrounds/show', {campground:foundCampground});
     });
 });
 
-app.get("/campgrounds/:id/edit", (req, res)=>{
-    Campground.findById(req.params.id, (err, found)=>{
+
+// Comment routes
+
+app.get('/campgrounds/:id/comments/new', (req, res)=>{
+    Campground.findById(req.params.id, (err, foundCampground)=>{
         if(err)throw err;
-        res.render('edit', {campground:found});    
+        res.render('comments/new', {campground: foundCampground});
     });
 });
 
-app.put("/campgrounds/:id", (req,res)=>{
-    req.body.camp.description = req.sanitize(req.body.camp.description);
-    Campground.findByIdAndUpdate(req.params.id, req.body.camp, (err, updatedCampground)=>{
-        if(err) throw err;
-        res.redirect('/');
+app.post('/campgrounds/:id/comments', (req, res)=>{
+    Campground.findById(req.params.id, (err, foundCampground)=>{
+        if(err){console.log(err); res.redirect('/campgrounds')}
+        Comment.create(req.body.comment, (err, comment)=>{
+            if(err)throw err;
+            foundCampground.comments.push(comment);
+            foundCampground.save();
+            res.redirect(`/campgrounds/${foundCampground._id}`);
+        });
     });
 });
 
