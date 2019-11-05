@@ -13,6 +13,8 @@ app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.get('/', (req, res)=>{
     res.render('landing');
