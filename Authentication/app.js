@@ -29,6 +29,7 @@ app.get('/secret', (req, res) =>{
     res.render('secret');
 });
 
+// SIGN UP ROUTES -----
 // Show sign-up form route
 app.get('/register', (req, res)=>{
     res.render('user/register');
@@ -43,6 +44,10 @@ app.post('/register', (req, res)=>{
         });
     })
 });
+// SIGN IN ROUTES -----
+app.get('/login', (req, res)=>{
+    res.render('user/login');
+})
 
 app.listen(3000, ()=>{
     console.log('Server started!');
