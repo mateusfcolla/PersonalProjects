@@ -10,12 +10,13 @@ const express               = require('express'),
 
 mongoose.connect('mongodb://localhost:27017/auth_demo_app', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-app.use(require('express-session')({ secret: 'Ma nam jef', resave: false, saveUninitialized: false }))
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(require('express-session')({ secret: 'Ma nam jef', resave: false, saveUninitialized: false }));
+passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
@@ -37,8 +38,8 @@ app.get('/register', (req, res)=>{
 
 // User sign-up
 app.post('/register', (req, res)=>{
-    User.register(new User({username: req.body.user.username}), req.body.user.password, (err, newUser)=>{
-        if(err){console.log(err); return res.render('user/register')};
+    User.register(new User({username: req.body.username}), req.body.password, (err, newUser)=>{
+        if(err){console.log(err); res.render('user/register')};
         passport.authenticate('local')(req, res, ()=>{
             res.redirect('/secret');
         });
@@ -48,6 +49,10 @@ app.post('/register', (req, res)=>{
 app.get('/login', (req, res)=>{
     res.render('user/login');
 })
+// Login logic
+app.post('/login', passport.authenticate('local', { successRedirect: '/secret', failureRedirect: '/login'}) , (req, res)=>{
+    
+});
 
 app.listen(3000, ()=>{
     console.log('Server started!');
