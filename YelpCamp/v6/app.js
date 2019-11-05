@@ -3,12 +3,15 @@ const express            = require('express'),
       mongoose           = require('mongoose'),
       expressSanitizer   = require('express-sanitizer'),
       methodOverride     = require('method-override'),
+      passport           = require('passport'),
+      LocalStrategy      = require('passport-local'),
       Comment            = require('./models/comment'),
       Campground         = require('./models/campground'),
+      User               = require('./models/user'),
       seedDB             = require('./seeds'),
       app                = express();
 
-// seedDB();
+//seedDB();
 mongoose.connect('mongodb://localhost:27017/yelp_camp', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
