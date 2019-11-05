@@ -11,7 +11,7 @@ const express            = require('express'),
 // seedDB();
 mongoose.connect('mongodb://localhost:27017/yelp_camp', {useFindAndModify: false, useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true});app.use(bodyParser.urlencoded({extended: true}));
 app.set('view engine', 'ejs');
-app.use(express.static('public'));
+app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride('_method'));
 app.use(expressSanitizer());
