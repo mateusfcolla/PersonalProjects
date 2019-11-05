@@ -1,6 +1,6 @@
 {
-  "name": "v6",
-  "version": "6.0.0",
+  "name": "v10",
+  "version": "10.0.0",
   "description": "YelpCamp's Colt Steele",
   "main": "app.js",
   "scripts": {
