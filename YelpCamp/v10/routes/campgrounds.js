@@ -34,6 +34,23 @@ router.get('/:id', (req, res)=>{
     });
 });
 
+// Edit campground route
+router.get('/:id/edit', isLoggedIn , (req, res)=>{
+    Campground.findById(req.params.id, (err, foundCampground)=>{
+        if(err){console.log(err); res.redirect('/campgrounds')}
+        res.render('campgrounds/edit', {campground: foundCampground});
+    });
+});
+// Update campground route
+router.put('/:id', isLoggedIn, (req, res)=>{
+    //Find and update the correct campground
+    Campground.findByIdAndUpdate(req.params.id, req.body.campground, (err, updatedCampground)=>{
+        if(err){console.log(err);res.redirect('/campgrounds')}
+        res.redirect(`/campgrounds/${req.params.id}`);
+    });
+    //Redirect somewhere
+});
+
 function isLoggedIn(req, res, next){
     if(req.isAuthenticated()){
         return(next());

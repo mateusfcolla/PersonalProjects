@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-9">
             <div class="card mb-3">
-                <img src="<%=campground.image%>" alt="<%=campground.name%>">
+                <img src="<%=campground.image%>" alt="<%=campground.name%>" class="showImage">
                 <div class="card-body">
 
                 <div class="row border-bottom mb-3">
@@ -22,7 +22,7 @@
 
                 <p><%=campground.description%></p>
                 <p>Submitted By: <em><%=campground.author.username%></em></p>
-
+                <a href="/campgrounds/<%=campground._id%>/edit" class="btn btn-warning btn-sm">Edit Campground</a>
                 </div>
             </div>
 
